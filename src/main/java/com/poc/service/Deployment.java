@@ -3,7 +3,6 @@ package com.poc.service;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.jbpm.services.api.DeploymentService;
 import org.jbpm.services.api.model.DeployedUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class Deployment {
 	@Autowired
 	private DeploymentService deploymentService;
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public Collection<String> index() {
     	Collection<DeployedUnit> deployed = deploymentService.getDeployedUnits();
     	Collection<String> units = new ArrayList<String>();

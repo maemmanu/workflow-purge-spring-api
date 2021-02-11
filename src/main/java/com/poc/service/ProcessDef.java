@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jbpm.services.api.DefinitionService;
 import org.jbpm.services.api.ProcessService;
 import org.jbpm.services.api.RuntimeDataService;
 import org.jbpm.services.api.model.ProcessDefinition;
@@ -25,9 +24,6 @@ public class ProcessDef {
 	
 	@Autowired
 	private ProcessService processService;
-	
-	@Autowired
-	private DefinitionService definitionService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<ProcessDefinition> getProcessDef() {

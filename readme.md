@@ -1,4 +1,2 @@
-Business App Initial Content
-=============================
+# workflow-purge-api-pspring
 
-Your project description here.
