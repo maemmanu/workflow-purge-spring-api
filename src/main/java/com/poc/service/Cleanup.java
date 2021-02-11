@@ -25,13 +25,13 @@ public class Cleanup {
 
         JPAAuditLogService auditService = new JPAAuditLogService(entityManagerFactory);
         auditService.variableInstanceLogDelete().processId(ProcessId).build().execute();
-        auditService.variableInstanceLogDelete().processId(ProcessId).build().execute();
+        auditService.nodeInstanceLogDelete().processId(ProcessId).build().execute();
 
 
         TaskJPAAuditService TaskauditService = new TaskJPAAuditService(entityManagerFactory);
         TaskauditService.auditTaskDelete().processId(ProcessId).build().execute();
         TaskauditService.taskEventInstanceLogDelete().build().execute();
-        TaskauditService.nodeInstanceLogDelete().build().execute();
+        TaskauditService.taskVariableInstanceLogDelete().build().execute();
 
 
           ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
@@ -42,6 +42,32 @@ public class Cleanup {
           RequpdateBuilder.build().execute();
 
           auditService.processInstanceLogDelete().processId(ProcessId).build().execute();
+        return "cleanup completed";
+
+    }
+
+    @RequestMapping(value = "/bydepid", method = RequestMethod.POST)
+    public String cleanDep(@RequestParam String DeploymentId) {
+
+        JPAAuditLogService auditService = new JPAAuditLogService(entityManagerFactory);
+        auditService.variableInstanceLogDelete().externalId(DeploymentId).build().execute();
+        auditService.nodeInstanceLogDelete().externalId(DeploymentId).build().execute();
+
+
+        TaskJPAAuditService TaskauditService = new TaskJPAAuditService(entityManagerFactory);
+        TaskauditService.auditTaskDelete().deploymentId(DeploymentId).build().execute();
+        TaskauditService.taskEventInstanceLogDelete().build().execute();
+        TaskauditService.taskVariableInstanceLogDelete().build().execute();
+
+
+          ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
+          ErrorInfoDeleteBuilder ExecupdateBuilder = ExecauditService.errorInfoLogDeleteBuilder();
+          ExecupdateBuilder.build().execute();
+
+          RequestInfoLogDeleteBuilder RequpdateBuilder = ExecauditService.requestInfoLogDeleteBuilder();
+          RequpdateBuilder.build().execute();
+
+          auditService.processInstanceLogDelete().externalId(DeploymentId).build().execute();
         return "cleanup completed";
 
     }
