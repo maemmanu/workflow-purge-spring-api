@@ -1,6 +1,7 @@
 package com.poc.service;
 
 import javax.persistence.EntityManagerFactory;
+import io.swagger.v3.oas.annotations.Operation;
 
 import org.jbpm.executor.impl.jpa.ExecutorJPAAuditService;
 import org.kie.internal.runtime.manager.audit.query.ErrorInfoDeleteBuilder;
@@ -20,6 +21,7 @@ public class Cleanup {
     @Autowired
     private EntityManagerFactory entityManagerFactory;
 
+    @Operation(summary = "Cleanup by ProcessID", description = "Cleanup all log data related to ProcessID", tags = { "LogCleanup" })
     @RequestMapping(value = "/byprocid", method = RequestMethod.POST)
     public String cleanProc(@RequestParam String ProcessId) {
 
@@ -46,6 +48,7 @@ public class Cleanup {
 
     }
 
+    @Operation(summary = "Cleanup by DeploymentID", description = "Cleanup all log data related to DeploymentID", tags = { "LogCleanup" })
     @RequestMapping(value = "/bydepid", method = RequestMethod.POST)
     public String cleanDep(@RequestParam String DeploymentId) {
 

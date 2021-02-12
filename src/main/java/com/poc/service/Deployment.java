@@ -2,6 +2,8 @@ package com.poc.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 import org.jbpm.services.api.DeploymentService;
 import org.jbpm.services.api.model.DeployedUnit;
@@ -20,8 +22,9 @@ public class Deployment {
 	@Autowired
 	private DeploymentService deploymentService;
 
+	@Operation(summary = "List deployments", description = "List all deployments", tags = { "Deployment" })
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public Collection<String> index() {
+    public Collection<String> deployShow() {
     	Collection<DeployedUnit> deployed = deploymentService.getDeployedUnits();
     	Collection<String> units = new ArrayList<String>();
     	
@@ -31,7 +34,7 @@ public class Deployment {
     	
         return units;
     }
-    
+    @Operation(summary = "Deploy a container", description = "Deploy a container", tags = { "Deployment" })
     @RequestMapping(value="/deploy", method=RequestMethod.POST)
     public String deploy(@RequestParam("containerId")String containerId, @RequestParam("groupID") String groupID, @RequestParam("arifactID") String arifactID, @RequestParam("version") String version) {
     	String outcome = "Deployment " + containerId + " deployed successfully";
@@ -41,8 +44,9 @@ public class Deployment {
 		deploymentService.deploy(unit);
     	
     	return outcome;
-    }
-
+	}
+	
+    @Operation(summary = "Undeploy a container", description = "Undeploy a container", tags = { "Deployment" })
     @RequestMapping(value="/undeploy", method=RequestMethod.POST)
     public String undeploy(@RequestParam("id")String id) {
     	String outcome = "";

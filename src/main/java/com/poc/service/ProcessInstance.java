@@ -3,6 +3,7 @@ package com.poc.service;
 import java.util.Collection;
 import java.util.Arrays;
 import java.util.Iterator;
+import io.swagger.v3.oas.annotations.Operation;
 
 import org.jbpm.services.api.ProcessService;
 import org.jbpm.services.api.RuntimeDataService;
@@ -24,15 +25,17 @@ public class ProcessInstance {
 	@Autowired
 	private ProcessService processService;
 
+	@Operation(summary = "Show Process Instances", description = "Show all Process Instances", tags = { "ProcessInstances" })
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<ProcessInstanceDesc> getProcessInstances() {
 		
-		Collection<ProcessInstanceDesc> processInstances = runtimeDataService.getProcessInstances(new QueryContext(0, 100));
+		Collection<ProcessInstanceDesc> processInstances = runtimeDataService.getProcessInstances(new QueryContext(0, 1000));
 
 		return processInstances;
  
 	}
-	
+
+	@Operation(summary = "Show a Process Instances", description = "Show a specific Process Instances for a specific id", tags = { "ProcessInstances" })
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ProcessInstanceDesc getProcessInstance(@RequestParam String id) {
 		long processInstanceId = Long.parseLong(id);
@@ -41,6 +44,7 @@ public class ProcessInstance {
 		return processInstance;
 	}
 	
+	@Operation(summary = "Abort an Instance", description = "Abort an instance corresponding to a specific Process Instances id", tags = { "AbortInstance" })
 	@RequestMapping(value = "/abortbyid", method = RequestMethod.POST)
 	public String abortProcessInstance(@RequestParam String id) {
 		
@@ -49,10 +53,11 @@ public class ProcessInstance {
 		return "Instance (" + id + ") aborted successfully";
 	}
 
+	@Operation(summary = "Abort all Instances of a Process", description = "Abort all Instances of a Process", tags = { "AbortInstance" })
 	@RequestMapping(value = "/abortbyprocessid", method = RequestMethod.POST)
 	public String abortProcessInstancebyProcID(@RequestParam String ProcessId) {
 
-		Collection<ProcessInstanceDesc> processInstanceIds = runtimeDataService.getProcessInstancesByProcessId(Arrays.asList(1), ProcessId, "anonymousUser", new QueryContext(0, 100) );
+		Collection<ProcessInstanceDesc> processInstanceIds = runtimeDataService.getProcessInstancesByProcessId(Arrays.asList(1), ProcessId, "anonymousUser", new QueryContext(0, 1000) );
 		
 		for (Iterator iterator = processInstanceIds.iterator(); iterator.hasNext();) {
 			ProcessInstanceDesc processInstanceDesc = (ProcessInstanceDesc) iterator.next();
@@ -62,10 +67,11 @@ public class ProcessInstance {
 		
 	}
 
+	@Operation(summary = "Abort all Instances of a Deployment", description = "Abort all Instances corresponding to DeploymentID", tags = { "AbortInstance" })
 	@RequestMapping(value = "/abortbydeploymentid", method = RequestMethod.POST)
 	public String abortProcessInstancebyDepID(@RequestParam String DeploymentId) {
 
-		Collection<ProcessInstanceDesc> processInstanceIds = runtimeDataService.getProcessInstancesByDeploymentId(DeploymentId, Arrays.asList(1), new QueryContext(0, 100) );
+		Collection<ProcessInstanceDesc> processInstanceIds = runtimeDataService.getProcessInstancesByDeploymentId(DeploymentId, Arrays.asList(1), new QueryContext(0, 1000) );
 		
 		for (Iterator iterator = processInstanceIds.iterator(); iterator.hasNext();) {
 			ProcessInstanceDesc processInstanceDesc = (ProcessInstanceDesc) iterator.next();

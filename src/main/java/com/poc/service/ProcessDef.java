@@ -3,6 +3,7 @@ package com.poc.service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import io.swagger.v3.oas.annotations.Operation;
 
 import org.jbpm.services.api.ProcessService;
 import org.jbpm.services.api.RuntimeDataService;
@@ -25,15 +26,17 @@ public class ProcessDef {
 	@Autowired
 	private ProcessService processService;
 
+	@Operation(summary = "Show all Process definitions", description = "Show all Process definitions", tags = { "ProcessDefinition" })
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Collection<ProcessDefinition> getProcessDef() {
 		
-		Collection<ProcessDefinition> processDefinitions = runtimeDataService.getProcesses(new QueryContext(0, 100));
+		Collection<ProcessDefinition> processDefinitions = runtimeDataService.getProcesses(new QueryContext(0, 1000));
 
 		return processDefinitions;
  
 	}
 	
+	@Operation(summary = "Create a new Process Instance", description = "Create any number of instance of a process by specifiying the quantity", tags = { "ProcessInstances" })
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String newProcessInstance(@RequestParam String deploymentId, @RequestParam String processId,
 	@RequestBody Map<String,String> allRequestParams, @RequestParam Integer quantity) {
