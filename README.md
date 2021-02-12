@@ -1,4 +1,4 @@
-# Massive Process Instance Abort with Spring and Java API
+# Process Instance Abort with Spring and Java API
 
 This Demo implements different methods for Aborting Processes and Cleaning the Logs Data.
 
@@ -28,6 +28,8 @@ To facilitate testing swagger documentation has been included in the POC. To acc
 ```
 http://localhost:8090/swagger-ui.html
 ```
+
+![alt text](Swagger-image.png)
 
 To verify the SQL statements that are ran, add the following to application.properties
 
