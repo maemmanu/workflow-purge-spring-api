@@ -3,6 +3,7 @@ package com.poc.service;
 import javax.persistence.EntityManagerFactory;
 import io.swagger.v3.oas.annotations.Operation;
 
+
 import org.jbpm.executor.impl.jpa.ExecutorJPAAuditService;
 import org.kie.internal.runtime.manager.audit.query.ErrorInfoDeleteBuilder;
 import org.kie.internal.runtime.manager.audit.query.RequestInfoLogDeleteBuilder;
@@ -36,14 +37,14 @@ public class Cleanup {
         TaskauditService.taskVariableInstanceLogDelete().build().execute();
 
 
-          ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
-          ErrorInfoDeleteBuilder ExecupdateBuilder = ExecauditService.errorInfoLogDeleteBuilder();
-          ExecupdateBuilder.build().execute();
+        ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
+        ErrorInfoDeleteBuilder ExecupdateBuilder = ExecauditService.errorInfoLogDeleteBuilder();
+        ExecupdateBuilder.build().execute();
 
-          RequestInfoLogDeleteBuilder RequpdateBuilder = ExecauditService.requestInfoLogDeleteBuilder();
-          RequpdateBuilder.build().execute();
+        RequestInfoLogDeleteBuilder RequpdateBuilder = ExecauditService.requestInfoLogDeleteBuilder();
+        RequpdateBuilder.build().execute();
 
-          auditService.processInstanceLogDelete().processId(ProcessId).build().execute();
+        auditService.processInstanceLogDelete().processId(ProcessId).build().execute();
         return "cleanup completed";
 
     }
@@ -63,14 +64,14 @@ public class Cleanup {
         TaskauditService.taskVariableInstanceLogDelete().build().execute();
 
 
-          ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
-          ErrorInfoDeleteBuilder ExecupdateBuilder = ExecauditService.errorInfoLogDeleteBuilder();
-          ExecupdateBuilder.build().execute();
+        ExecutorJPAAuditService ExecauditService = new ExecutorJPAAuditService(entityManagerFactory);
+        ErrorInfoDeleteBuilder ExecupdateBuilder = ExecauditService.errorInfoLogDeleteBuilder();
+        ExecupdateBuilder.build().execute();
 
-          RequestInfoLogDeleteBuilder RequpdateBuilder = ExecauditService.requestInfoLogDeleteBuilder();
-          RequpdateBuilder.build().execute();
+        RequestInfoLogDeleteBuilder RequpdateBuilder = ExecauditService.requestInfoLogDeleteBuilder();
+        RequpdateBuilder.build().execute();
 
-          auditService.processInstanceLogDelete().externalId(DeploymentId).build().execute();
+        auditService.processInstanceLogDelete().externalId(DeploymentId).build().execute();
         return "cleanup completed";
 
     }
